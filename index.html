@@ -399,6 +399,7 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
     completion: null
   };
   var current = null;
+  var CONFIG_READY = Promise.resolve();
   var enteredAt = 0;
   var busy = false;
   var audio = null;
@@ -777,7 +778,10 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
 
   function assign() {
     if (S.arm) return Promise.resolve(firstScreenFor(S.arm));
-    return withRetry('assignArm', [S.id, !!BOOT.test, BOOT.forceArm || ''], 3).then(function (arm) {
+    return CONFIG_READY.then(function () {
+      if (!BOOT.open) throw new Error('closed');
+      return withRetry('assignArm', [S.id, !!BOOT.test, BOOT.forceArm || ''], 3);
+    }).then(function (arm) {
       S.arm = arm;
       if (BOOT.test) document.getElementById('testBadge').textContent = MODE_LABEL + ' \u00b7 arm: ' + arm;
       return firstScreenFor(arm);
@@ -1048,15 +1052,14 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
   }
 
   if (WEB) {
-    $screen.innerHTML = '<p class="muted">Loading the survey\u2026</p>';
-    $actions.hidden = true;
-    loadConfig(3).then(function (cfg) {
+    // Show the welcome page at once. The settings load in the background,
+    // which also wakes the server up before the participant needs it.
+    go('welcome');
+    CONFIG_READY = loadConfig(3).then(function (cfg) {
       ['fdAudioUrl', 'fdAudioSeconds', 'sdSimUrl'].forEach(function (k) { if (cfg[k]) BOOT[k] = cfg[k]; });
       BOOT.open = cfg.open !== false || BOOT.test;
-      go(BOOT.open ? 'welcome' : 'closed');
-    }, function () {
-      $screen.innerHTML = '<h1>The survey could not load</h1><p>Please check your internet connection and reload this page.</p>';
-    });
+      if (!BOOT.open && (current === 'welcome' || current === 'about')) go('closed');
+    }, function () { /* keep the built-in settings; the server calls report any problem */ });
   } else {
     go(BOOT.open === false ? 'closed' : 'welcome');
   }
