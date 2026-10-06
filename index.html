@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Attitudes toward meat taxation</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='%232B4672'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+<style>
+/* One calm reading column. A single light theme on purpose: every
+   participant sees the stimulus rendered the same way. The accent is a
+   muted blue, chosen to carry no environmental or political connotation. */
+:root {
+  --bg: #F3F4F7;
+  --surface: #FFFFFF;
+  --ink: #1B2130;
+  --muted: #566073;
+  --line: #D4D9E3;
+  --accent: #2B4672;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E7ECF4;
+  --alert: #9A3412;
+  --alert-soft: #FCEFE7;
+  --ui: 'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --read: 'Literata', Georgia, 'Times New Roman', serif;
+  --radius: 10px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--ui);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+.shell {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding-inline: 16px;
+  padding-block: 0 48px;
+}
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.org {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.test {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--alert);
+  background: var(--alert-soft);
+  border: 1px solid #F1C6AE;
+  border-radius: 999px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+main { outline: none; }
+main > * + * { margin-top: 1rem; }
+h1 {
+  font-family: var(--read);
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin: 0 0 1.1rem;
+  text-wrap: balance;
+}
+h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+  line-height: 1.4;
+}
+p { margin: 0 0 1rem; }
+.lead { font-weight: 700; }
+.muted { color: var(--muted); }
+.small { font-size: 0.9rem; }
+.email { user-select: all; font-weight: 700; overflow-wrap: anywhere; }
+
+/* Questions */
+.q {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.q.has-error { border-color: var(--alert); }
+.err { color: var(--alert); font-weight: 700; font-size: 0.92rem; margin: 10px 0 0; }
+.choices { display: grid; gap: 8px; }
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--surface);
+  transition: border-color .12s, background-color .12s;
+}
+.choice:hover { border-color: #AEB7C7; }
+.choice.is-checked { border-color: var(--accent); background: var(--accent-soft); }
+.choice input { accent-color: var(--accent); width: 18px; height: 18px; margin: 0; flex: none; }
+select {
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-visible, .play:focus-visible {
+  outline: 3px solid #7F9BD0;
+  outline-offset: 2px;
+}
+
+/* Vignettes */
+.vignette {
+  font-family: var(--read);
+  font-size: 1.12rem;
+  line-height: 1.7;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 24px 22px;
+  margin-bottom: 22px;
+}
+.vignette p { margin: 0; }
+.scale { border: 0; margin: 0; padding: 0; min-width: 0; }
+.scale legend { font-weight: 700; font-size: 1.1rem; padding: 0; margin-bottom: 4px; }
+.scale .rowlabel { font-size: 0.85rem; color: var(--muted); margin: 0 0 14px; }
+.scale-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.scale-row::before {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 19px;
+  height: 2px;
+  background: var(--line);
+}
+.opt {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 4px 6px 10px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.dot {
+  position: relative;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #8A93A5;
+  background: var(--surface);
+  transition: border-color .12s, background-color .12s, box-shadow .12s;
+}
+.opt:hover .dot { border-color: var(--accent); }
+.opt input:checked + .dot {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 5px var(--surface);
+}
+.opt input:focus-visible + .dot { outline: 3px solid #7F9BD0; outline-offset: 3px; }
+.lab { font-size: 0.88rem; line-height: 1.3; color: var(--muted); }
+.opt input:checked ~ .lab { color: var(--ink); font-weight: 700; }
+@media (max-width: 600px) {
+  .scale-row { grid-template-columns: 1fr; gap: 2px; }
+  .scale-row::before { left: 21px; right: auto; top: 22px; bottom: 22px; width: 2px; height: auto; }
+  .opt { flex-direction: row; text-align: left; gap: 14px; padding: 6px 4px; }
+  .lab { font-size: 0.98rem; }
+  .vignette { padding: 18px; font-size: 1.06rem; }
+  h1 { font-size: 1.4rem; }
+  .q { padding: 16px; }
+}
+
+/* Audio player */
+.player {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin: 8px 0 18px;
+}
+.play {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.play svg { width: 22px; height: 22px; fill: currentColor; }
+.play[disabled] { opacity: .5; cursor: default; }
+.track-wrap { flex: 1; min-width: 0; }
+.track { height: 6px; background: var(--accent-soft); border-radius: 3px; overflow: hidden; }
+.fill { height: 100%; width: 0; background: var(--accent); transition: width .25s linear; }
+.time { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); margin-top: 6px; font-variant-numeric: tabular-nums; }
+.status { font-size: 0.95rem; color: var(--muted); }
+.status.done { color: var(--ink); font-weight: 700; }
+
+/* Links that act as buttons */
+.linkbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  padding: 10px 20px;
+  margin: 4px 0 18px;
+  background: var(--surface);
+}
+.linkbtn:hover { background: var(--accent-soft); }
+.linkbtn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.opened { font-size: 0.92rem; color: var(--muted); margin-top: -6px; }
+
+/* Navigation */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.spacer { flex: 1; }
+.btn {
+  font: inherit;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 11px 26px;
+  cursor: pointer;
+  border: 2px solid var(--accent);
+  min-width: 112px;
+}
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.hint { text-align: right; font-size: 0.9rem; color: var(--muted); margin: 10px 0 0; }
+.hint.alert { color: var(--alert); font-weight: 700; }
+.codebox {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 14px 18px;
+}
+.codebox code { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.06em; user-select: all; }
+.foot { margin-top: 40px; font-size: 0.82rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <span class="org">University of Bergen &middot; Research study</span>
+    <span id="testBadge" class="test" hidden>Test mode</span>
+  </header>
+
+  <main id="screen" tabindex="-1"></main>
+
+  <nav class="actions" id="actions" aria-label="Survey navigation">
+    <button id="backBtn" class="btn ghost" type="button" hidden>Back</button>
+    <span class="spacer"></span>
+    <button id="nextBtn" class="btn primary" type="button">Next</button>
+  </nav>
+  <p id="navHint" class="hint" hidden></p>
+</div>
+
+<script type="application/json" id="boot"><?!= bootJson ?></script>
+<script>
+(function () {
+  'use strict';
+
+  // The survey's server: the Google Apps Script web app that assigns arms and
+  // stores responses. Used when this page is hosted on GitHub Pages.
+  var API_URL = 'https://script.google.com/macros/s/AKfycbw4dmBK_MjZPLE7HtsvIoF8w2ke7545fwJRU5P6ar3Rrm9RT_W3L8hXNaik5-mALPKw/exec';
+
+  // Three ways this page can run:
+  //   APPS     served by Google Apps Script itself (settings arrive in #boot)
+  //   WEB      hosted on an ordinary website; settings are fetched from API_URL
+  //   PREVIEW  opened as a file on a computer: nothing is saved
+  var BOOT = null;
+  try { BOOT = JSON.parse(document.getElementById('boot').textContent); } catch (e) { BOOT = null; }
+  var APPS = !!(window.google && google.script && google.script.run);
+  var MOCK = !!window.MOCK_BACKEND;
+  var WEB = !APPS && !MOCK && !BOOT && /^https?:$/.test(location.protocol);
+  var PREVIEW = !APPS && !MOCK && !WEB;
+  var ARM_CODES = ['control', 'fd', 'sd'];
+
+  if (!BOOT) {
+    var q = {};
+    try { q = Object.fromEntries(new URLSearchParams(location.search)); } catch (e) { q = {}; }
+    var isTest = q.test === '1' || q.test === 'true';
+    var params = {};
+    Object.keys(q).slice(0, 20).forEach(function (k) {
+      if (k !== 'test' && k !== 'arm') params[String(k).slice(0, 60)] = String(q[k]).slice(0, 200);
+    });
+    BOOT = {
+      test: isTest || PREVIEW,
+      forceArm: ((isTest || PREVIEW) && ARM_CODES.indexOf(q.arm) >= 0) ? q.arm : '',
+      params: params,
+      open: true,
+      // Used by the preview; on the website these are replaced by the server's settings.
+      fdAudioUrl: 'https://archive.org/download/v-1_20260913/V1.m4a', fdAudioSeconds: 398,
+      sdSimUrl: 'https://exchange.iseesystems.com/public/mai-amit/interfaceforsurvey/index.html'
+    };
+  }
+  if (PREVIEW) BOOT.test = true;
+  BOOT.params = BOOT.params || {};
+
+  // ---------------------------------------------------------------
+  // Instrument content (Meat Taxation V2)
+  // ---------------------------------------------------------------
+  var COUNTRIES = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Republic of the...", "Costa Rica", "C\u00f4te d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong (S.A.R.)", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia, Federated States of...", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Republic of Moldova", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Tajikistan", "Thailand", "The former Yugoslav Republic of Macedonia", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom of Great Britain and Northern Ireland", "United Republic of Tanzania", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela, Bolivarian Republic of...", "Viet Nam", "Yemen", "Zambia", "Zimbabwe"];
+  var AGE = ['18-24', '25-34', '35-44', '45-54', '55-64', 'Over 65'];
+  var GENDER = ['Male', 'Female', 'Non-binary / third gender', 'Prefer not to say'];
+  var MEAT = [
+    'I eat meat every day',
+    'I eat meat several times per week',
+    'I eat meat occasionally (less than once a week)',
+    'I do not eat meat (vegan/vegetarian)',
+    'I prefer not to say'
+  ];
+  var SCALE = [
+    'I strongly oppose this policy',
+    'I somewhat oppose this policy',
+    "I don't care / don't know",
+    'I somewhat support this policy',
+    'I strongly support this policy'
+  ];
+  var LOWINC = 'All the money collected would be used to help low-income households by giving them extra support to cover food costs.';
+  var CLIMATE = 'All the money collected would go to programs that protect the climate and improve public health, such as reducing emissions and preventing diet-related diseases.';
+  var SPLIT = 'The money collected would be split evenly: half would help low-income households with food costs, and half would fund climate and health programs.';
+  function stem(rate, price) {
+    return 'A ' + rate + '% tax on meat would begin in your country.<br>A meat product that had cost 10 currency units, will now be sold for ' + price + ' currency units.<br>';
+  }
+  // Display order V1..V6 as in the Qualtrics Survey block.
+  var VIGNETTES = [
+    { field: 'v1_r15_lowincome', html: stem(15, '11.50') + LOWINC },
+    { field: 'v2_r15_climate',   html: stem(15, '11.50') + CLIMATE },
+    { field: 'v3_r15_split',     html: stem(15, '11.50') + SPLIT },
+    { field: 'v4_r40_lowincome', html: stem(40, '14.00') + LOWINC },
+    { field: 'v5_r40_climate',   html: stem(40, '14.00') + CLIMATE },
+    { field: 'v6_r40_split',     html: stem(40, '14.00') + SPLIT }
+  ];
+
+  // ---------------------------------------------------------------
+  // State
+  // ---------------------------------------------------------------
+  var S = {
+    id: makeId(),
+    startedAt: new Date().toISOString(),
+    t0: Date.now(),
+    arm: null,
+    a: { country: '', age_group: '', gender: '', meat_consumption: '', consent: 0 },
+    fd: { completed: false, fallback: false, fallbackStart: 0, fallbackDone: false, confirmed: false, ms: 0 },
+    sd: { opened: 0, awayMs: 0, ms: 0, confirmed: false },
+    introMs: 0,
+    v: {},
+    vMs: {},
+    completion: null
+  };
+  var current = null;
+  var enteredAt = 0;
+  var busy = false;
+  var audio = null;
+  var stallTimer = null;
+  var fallbackTimer = null;
+  var awayStart = null;
+
+  var $screen = document.getElementById('screen');
+  var $next = document.getElementById('nextBtn');
+  var $back = document.getElementById('backBtn');
+  var $hint = document.getElementById('navHint');
+  var $actions = document.getElementById('actions');
+
+  var MODE_LABEL = PREVIEW ? 'Preview \u00b7 nothing is saved' : 'Test mode';
+  if (BOOT.test) {
+    var badge = document.getElementById('testBadge');
+    badge.hidden = false;
+    badge.textContent = MODE_LABEL + (BOOT.forceArm ? ' \u00b7 arm: ' + BOOT.forceArm : '');
+  }
+
+  // ---------------------------------------------------------------
+  // Screens
+  // ---------------------------------------------------------------
+  var SCREENS = {
+    closed: {
+      nav: false,
+      render: function () {
+        return '<h1>This survey is now closed</h1><p>Thank you for your interest. We are no longer collecting responses.</p>';
+      }
+    },
+
+    welcome: {
+      render: function () {
+        return '' +
+          '<h1>Thank you for participating in this survey!</h1>' +
+          '<p>Thank you for taking part in this research study about public attitudes toward environmental policies, including potential taxes on meat consumption.</p>' +
+          '<p>This survey is part of an academic project at the University of Bergen.</p>' +
+          '<p>Your responses will be completely anonymous and used only for research purposes. There are no right or wrong answers\u2014please answer as honestly as you can.</p>' +
+          '<p>The survey takes about 10 minutes to complete. You may withdraw at any point by closing your browser; no data will be saved unless you finish the survey.</p>' +
+          '<p>If you have any questions about the study, you can contact the researcher at <span class="email">Mai.Amit@student.uib.no</span>.</p>';
+      },
+      next: function () { return 'about'; }
+    },
+
+    about: {
+      back: 'welcome',
+      render: function () {
+        var opts = '<option value="">Select a country</option>' + COUNTRIES.map(function (c) {
+          return '<option' + (S.a.country === c ? ' selected' : '') + '>' + esc(c) + '</option>';
+        }).join('');
+        return '' +
+          '<section class="q" id="q-country"><h2><label for="country">In which country do you currently reside?</label></h2>' +
+          '<select id="country" name="country">' + opts + '</select></section>' +
+          radioQ('age_group', 'What age group do you belong to?', AGE) +
+          radioQ('gender', 'What is your gender?', GENDER) +
+          radioQ('meat_consumption', 'Which of the following best describes your current meat consumption?', MEAT) +
+          '<section class="q" id="q-consent"><h2>By proceeding, you confirm that you are 18 years or older, fluent in English, and that you voluntarily agree to participate in this study.</h2>' +
+          '<div class="choices"><label class="choice' + (S.a.consent ? ' is-checked' : '') + '"><input type="checkbox" id="consent" name="consent"' + (S.a.consent ? ' checked' : '') + '> <span>I confirm</span></label></div></section>';
+      },
+      after: function () {
+        document.getElementById('country').addEventListener('change', function (e) { S.a.country = e.target.value; });
+        bindChoices();
+        document.getElementById('consent').addEventListener('change', function (e) {
+          S.a.consent = e.target.checked ? 1 : 0;
+          e.target.closest('.choice').classList.toggle('is-checked', e.target.checked);
+          clearError('consent');
+        });
+      },
+      next: function () {
+        var missing = [];
+        ['age_group', 'gender', 'meat_consumption'].forEach(function (k) { if (!S.a[k]) missing.push(k); });
+        if (!S.a.consent) missing.push('consent');
+        missing.forEach(showError);
+        if (missing.length) {
+          var first = document.getElementById('q-' + missing[0]);
+          if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return null;
+        }
+        return assign();
+      }
+    },
+
+    fd_audio: {
+      render: function () {
+        return '' +
+          '<h1>Before you continue</h1>' +
+          '<p>You will now listen to a short imagination exercise that may help you reflect on the questions that follow.</p>' +
+          '<p>It takes about seven minutes. There is nothing you need to do except listen and follow along.</p>' +
+          '<p>Please use headphones if you have them, and find somewhere you won\u2019t be interrupted.</p>' +
+          '<div class="player" role="group" aria-label="Audio player">' +
+            '<button class="play" id="playBtn" type="button" aria-label="Play">' + ICON_PLAY + '</button>' +
+            '<div class="track-wrap"><div class="track"><div class="fill" id="fill"></div></div>' +
+            '<div class="time"><span id="tNow">0:00</span><span id="tTotal">' + clock(BOOT.fdAudioSeconds || 398) + '</span></div></div>' +
+          '</div>' +
+          '<p class="status" id="audioStatus">Press play and listen all the way through.</p>' +
+          '<p id="fallback" class="small" hidden>If the audio does not play here, <a id="fallbackLink" href="' + esc(BOOT.fdAudioUrl) + '" target="_blank" rel="noopener">open it in a new tab</a>, listen all the way through, then come back to this tab.</p>';
+      },
+      after: function () {
+        ensureAudio();
+        document.getElementById('playBtn').addEventListener('click', togglePlay);
+        document.getElementById('fallbackLink').addEventListener('click', startFallback);
+        if (S.fd.fallback) document.getElementById('fallback').hidden = false;
+        updatePlayer();
+      },
+      leave: function () { if (audio && !audio.paused) audio.pause(); clearTimeout(stallTimer); },
+      ready: function () { return S.fd.completed || S.fd.fallbackDone; },
+      hint: function () {
+        if (S.fd.fallback && !S.fd.fallbackDone) return 'Next becomes available after the audio\u2019s running time.';
+        return 'Next becomes available when the audio has finished.';
+      },
+      bucket: 'fd',
+      next: function () { return 'fd_confirm'; }
+    },
+
+    fd_confirm: {
+      back: 'fd_audio',
+      backLabel: 'Return',
+      render: function () {
+        return '<section class="q"><h2>Please confirm that you have listened to the audio. If you haven\'t please click "Return", listen to it, and then continue with the survey.</h2>' +
+          '<div class="choices"><label class="choice' + (S.fd.confirmed ? ' is-checked' : '') + '"><input type="checkbox" id="fdc"' + (S.fd.confirmed ? ' checked' : '') + '> <span>I have listened to the audio</span></label></div></section>';
+      },
+      after: function () {
+        document.getElementById('fdc').addEventListener('change', function (e) {
+          S.fd.confirmed = e.target.checked;
+          e.target.closest('.choice').classList.toggle('is-checked', e.target.checked);
+        });
+      },
+      bucket: 'fd',
+      next: function () { return 'survey_intro'; }
+    },
+
+    sd_intro: {
+      render: function () {
+        return '' +
+          '<h1>Please explore this short interactive simulation before continuing</h1>' +
+          '<p>In the next step, you will be asked to explore a short simulation. The simulation introduces a perspective that may help you reflect on the questions that follow.</p>' +
+          '<p>Click the link below to open the simulation in a new tab, spend about 5 minutes with it, and then return to this page to continue with the survey.</p>' +
+          '<a class="linkbtn" id="simLink" href="' + esc(BOOT.sdSimUrl) + '" target="_blank" rel="noopener">' +
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>' +
+            'Open the simulation</a>' +
+          '<p class="opened" id="openedNote"' + (S.sd.opened ? '' : ' hidden') + '>The simulation opened in a new tab. Come back here when you have finished.</p>' +
+          '<p>When you have finished, click Next to proceed.</p>';
+      },
+      after: function () {
+        var link = document.getElementById('simLink');
+        var onOpen = function () {
+          S.sd.opened++;
+          document.getElementById('openedNote').hidden = false;
+          refreshNav();
+        };
+        link.addEventListener('click', onOpen);
+        link.addEventListener('auxclick', function (e) { if (e.button === 1) onOpen(); });
+      },
+      leave: function () { cameBack(); },
+      ready: function () { return S.sd.opened > 0; },
+      hint: function () { return 'Open the simulation first.'; },
+      bucket: 'sd',
+      next: function () { return 'sd_confirm'; }
+    },
+
+    sd_confirm: {
+      back: 'sd_intro',
+      backLabel: 'Return',
+      render: function () {
+        return '<section class="q"><h2>Please confirm that you have interacted with the simulation. If you haven\'t please click "Return", explore the simulation, and then continue with the survey.</h2>' +
+          '<div class="choices"><label class="choice' + (S.sd.confirmed ? ' is-checked' : '') + '"><input type="checkbox" id="sdc"' + (S.sd.confirmed ? ' checked' : '') + '> <span>I have interacted with the simulation</span></label></div></section>';
+      },
+      after: function () {
+        document.getElementById('sdc').addEventListener('change', function (e) {
+          S.sd.confirmed = e.target.checked;
+          e.target.closest('.choice').classList.toggle('is-checked', e.target.checked);
+        });
+      },
+      bucket: 'sd',
+      next: function () { return 'survey_intro'; }
+    },
+
+    survey_intro: {
+      render: function () {
+        return '' +
+          '<p class="lead">In the next section, you will read a few short descriptions of possible meat taxation policies in your country of residence.</p>' +
+          '<p>For each policy, you will be asked how strongly you support it.<br>There are no right or wrong answers \u2014 please answer as honestly as you can, based on your personal opinion.</p>';
+      },
+      bucket: 'intro',
+      next: function () { return 'v1'; }
+    },
+
+    submit_failed: {
+      nav: true,
+      nextLabel: 'Try again',
+      render: function () {
+        return '<h1>Your answers have not been sent yet</h1>' +
+          '<p>We could not reach the server. Please check your internet connection, then press Try again. Your answers are kept on this page until they are sent.</p>';
+      },
+      next: function () { return submit(); }
+    },
+
+    end: {
+      nav: false,
+      render: function () {
+        if (PREVIEW) {
+          return '<h1>End of preview</h1><p>This copy was opened from your computer, so nothing was saved. Participants see: \u201cWe thank you for your time spent taking this survey. Your response has been recorded.\u201d</p>';
+        }
+        var done = S.completion || {};
+        var html = '<h1>Thank you</h1><p>We thank you for your time spent taking this survey. Your response has been recorded.</p>';
+        if (done.completionCode) {
+          html += '<p>Your completion code:</p><div class="codebox"><code id="ccode">' + esc(done.completionCode) + '</code>' +
+            '<button class="btn ghost" type="button" id="copyBtn">Copy</button></div>';
+        }
+        if (done.completionUrl) {
+          html += '<p style="margin-top:1.4rem">Please click the button below to confirm your participation.</p>' +
+            '<a class="linkbtn" href="' + esc(done.completionUrl) + '" target="_top">Complete and return</a>';
+        }
+        return html;
+      },
+      after: function () {
+        var b = document.getElementById('copyBtn');
+        if (b) b.addEventListener('click', function () {
+          var code = (S.completion || {}).completionCode;
+          var done = function () { b.textContent = 'Copied'; };
+          try {
+            navigator.clipboard.writeText(code).then(done, function () { selectText('ccode'); });
+          } catch (e) { selectText('ccode'); }
+        });
+      }
+    }
+  };
+
+  // Six vignette screens
+  VIGNETTES.forEach(function (vg, i) {
+    var n = i + 1;
+    SCREENS['v' + n] = {
+      vignette: n,
+      render: function () {
+        var cur = S.v[vg.field];
+        var opts = SCALE.map(function (label, k) {
+          var val = k + 1;
+          return '<label class="opt"><input type="radio" name="scale" value="' + val + '"' + (cur === val ? ' checked' : '') + '>' +
+            '<span class="dot" aria-hidden="true"></span><span class="lab">' + esc(label) + '</span></label>';
+        }).join('');
+        return '<div class="vignette"><p>' + vg.html + '</p></div>' +
+          '<section class="q" id="q-scale"><fieldset class="scale"><legend>Do you support this policy?</legend>' +
+          '<p class="rowlabel">Strength of support</p>' +
+          '<div class="scale-row">' + opts + '</div></fieldset></section>';
+      },
+      after: function () {
+        Array.prototype.forEach.call(document.querySelectorAll('input[name="scale"]'), function (r) {
+          r.addEventListener('change', function () {
+            S.v[vg.field] = Number(r.value);
+            clearError('scale');
+          });
+        });
+      },
+      next: function () {
+        if (!S.v[vg.field]) { showError('scale', 'Please choose an answer to continue.'); return null; }
+        return n < 6 ? 'v' + (n + 1) : submit();
+      }
+    };
+  });
+
+  // ---------------------------------------------------------------
+  // Navigation
+  // ---------------------------------------------------------------
+  function go(name) {
+    if (current) {
+      var prev = SCREENS[current];
+      addTime(current);
+      if (prev.leave) prev.leave();
+    }
+    current = name;
+    var sc = SCREENS[name];
+    $screen.innerHTML = sc.render();
+    enteredAt = Date.now();
+    if (sc.after) sc.after();
+    var showNav = sc.nav !== false;
+    $actions.hidden = !showNav;
+    $back.hidden = !sc.back;
+    $back.textContent = sc.backLabel || 'Back';
+    $next.textContent = sc.nextLabel || 'Next';
+    refreshNav();
+    window.scrollTo(0, 0);
+    try { $screen.focus({ preventScroll: true }); } catch (e) { /* older browsers */ }
+  }
+
+  function refreshNav() {
+    var sc = SCREENS[current];
+    if (!sc) return;
+    var ready = sc.ready ? sc.ready() : true;
+    $next.disabled = busy || !ready;
+    if (!ready && sc.hint) { $hint.textContent = sc.hint(); $hint.className = 'hint'; $hint.hidden = false; }
+    else if (!$hint.classList.contains('alert')) { $hint.hidden = true; }
+  }
+
+  function setAlert(msg) {
+    $hint.textContent = msg || '';
+    $hint.className = msg ? 'hint alert' : 'hint';
+    $hint.hidden = !msg;
+  }
+
+  function addTime(name) {
+    var ms = Date.now() - enteredAt;
+    var sc = SCREENS[name];
+    if (!sc) return;
+    if (sc.bucket === 'fd') S.fd.ms += ms;
+    else if (sc.bucket === 'sd') S.sd.ms += ms;
+    else if (sc.bucket === 'intro') S.introMs += ms;
+    else if (sc.vignette) S.vMs[sc.vignette] = (S.vMs[sc.vignette] || 0) + ms;
+  }
+
+  $next.addEventListener('click', function () {
+    if (busy || $next.disabled) return;
+    setAlert('');
+    var sc = SCREENS[current];
+    var r = sc.next ? sc.next() : null;
+    if (!r) return;
+    if (typeof r === 'string') { go(r); return; }
+    // A promise: assignment or submission
+    busy = true;
+    $next.textContent = 'One moment\u2026';
+    refreshNav();
+    var settle = function () {
+      busy = false;
+      $next.textContent = SCREENS[current].nextLabel || 'Next';
+    };
+    r.then(function (dest) {
+      settle();
+      if (dest) go(dest); else refreshNav();
+    }, function (msg) {
+      settle();
+      refreshNav();
+      if (msg) setAlert(msg);
+    });
+  });
+
+  $back.addEventListener('click', function () {
+    var sc = SCREENS[current];
+    if (sc.back && !busy) { setAlert(''); go(sc.back); }
+  });
+
+  // ---------------------------------------------------------------
+  // Server calls
+  // ---------------------------------------------------------------
+  function call(fn) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    return new Promise(function (resolve, reject) {
+      if (window.google && google.script && google.script.run) {
+        var runner = google.script.run.withSuccessHandler(resolve).withFailureHandler(reject);
+        runner[fn].apply(runner, args);
+      } else if (window.MOCK_BACKEND) {
+        Promise.resolve().then(function () { return window.MOCK_BACKEND[fn].apply(null, args); }).then(resolve, reject);
+      } else if (WEB) {
+        // A plain-text POST needs no preflight, and sends no Google cookies, so
+        // participants' own Google sign-ins can never get in the way.
+        fetch(API_URL, { method: 'POST', body: JSON.stringify({ fn: fn, args: args }) })
+          .then(function (r) { return r.json(); })
+          .then(function (d) { if (d && d.ok) resolve(d.result); else reject(new Error((d && d.error) || 'Server error')); })
+          .catch(reject);
+      } else if (PREVIEW) {
+        // Opened from a computer: pick an arm, save nothing.
+        var arms = ['control', 'fd', 'sd'];
+        if (fn === 'assignArm') resolve(args[2] || arms[Math.floor(Math.random() * 3)]);
+        else resolve({ ok: true, preview: true });
+      } else {
+        reject(new Error('No server available'));
+      }
+    });
+  }
+
+  function withRetry(fn, args, tries) {
+    return call.apply(null, [fn].concat(args)).catch(function (err) {
+      if (tries <= 1 || /closed|consent|arm|Missing answer/i.test(String(err && err.message))) throw err;
+      return new Promise(function (res) { setTimeout(res, 800 + Math.random() * 900); })
+        .then(function () { return withRetry(fn, args, tries - 1); });
+    });
+  }
+
+  function assign() {
+    if (S.arm) return Promise.resolve(firstScreenFor(S.arm));
+    return withRetry('assignArm', [S.id, !!BOOT.test, BOOT.forceArm || ''], 3).then(function (arm) {
+      S.arm = arm;
+      if (BOOT.test) document.getElementById('testBadge').textContent = MODE_LABEL + ' \u00b7 arm: ' + arm;
+      return firstScreenFor(arm);
+    }, function (err) {
+      if (/closed/i.test(String(err && err.message))) { go('closed'); return Promise.reject(''); }
+      return Promise.reject('We could not continue. Please check your internet connection and press Next again.' + detail(err));
+    });
+  }
+
+  function firstScreenFor(arm) {
+    return arm === 'fd' ? 'fd_audio' : arm === 'sd' ? 'sd_intro' : 'survey_intro';
+  }
+
+  function submit() {
+    // Record the time on the last screen before sending.
+    if (current && SCREENS[current].vignette) { addTime(current); enteredAt = Date.now(); }
+    var p = payload();
+    return withRetry('submitResponse', [p], 3).then(function (res) {
+      S.completion = res || {};
+      return 'end';
+    }, function (err) {
+      if (current !== 'submit_failed') { go('submit_failed'); return Promise.reject(BOOT.test ? detail(err).trim() : ''); }
+      return Promise.reject('Still not sent. Please check your connection and try again.' + detail(err));
+    });
+  }
+
+  // On test links, show the server's own error so problems can be diagnosed.
+  function detail(err) {
+    if (!BOOT.test || !err) return '';
+    return ' (Server: ' + String(err.message || err).slice(0, 200) + ')';
+  }
+
+  function payload() {
+    var p = {
+      response_id: S.id,
+      is_test: BOOT.test ? 1 : 0,
+      arm: S.arm,
+      participant_id: pickPid(BOOT.params),
+      url_params: JSON.stringify(BOOT.params),
+      started_at: S.startedAt,
+      duration_sec: (Date.now() - S.t0) / 1000,
+      device: deviceClass(),
+      country: S.a.country,
+      age_group: S.a.age_group,
+      gender: S.a.gender,
+      meat_consumption: S.a.meat_consumption,
+      consent: S.a.consent,
+      survey_intro_sec: S.introMs / 1000
+    };
+    if (S.arm === 'fd') {
+      p.fd_audio_completed = S.fd.completed ? 1 : 0;
+      p.fd_listened_sec = audio ? playedSeconds(audio) : 0;
+      p.fd_audio_fallback = S.fd.fallback ? 1 : 0;
+      p.fd_page_sec = S.fd.ms / 1000;
+      p.fd_confirmed = S.fd.confirmed ? 1 : 0;
+    }
+    if (S.arm === 'sd') {
+      p.sd_link_opened = S.sd.opened;
+      p.sd_away_sec = S.sd.awayMs / 1000;
+      p.sd_page_sec = S.sd.ms / 1000;
+      p.sd_confirmed = S.sd.confirmed ? 1 : 0;
+    }
+    VIGNETTES.forEach(function (vg, i) {
+      p[vg.field] = S.v[vg.field];
+      p['v' + (i + 1) + '_sec'] = (S.vMs[i + 1] || 0) / 1000;
+    });
+    return p;
+  }
+
+  // ---------------------------------------------------------------
+  // Audio (Intervention A)
+  // ---------------------------------------------------------------
+  var ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>';
+  var ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+
+  function ensureAudio() {
+    if (audio) return audio;
+    audio = new Audio();
+    audio.preload = 'metadata';
+    audio.src = BOOT.fdAudioUrl;
+    ['timeupdate', 'loadedmetadata', 'play', 'pause', 'playing'].forEach(function (ev) {
+      audio.addEventListener(ev, updatePlayer);
+    });
+    audio.addEventListener('ended', function () {
+      S.fd.completed = true;
+      updatePlayer();
+      refreshNav();
+    });
+    audio.addEventListener('error', function () { showFallback(); });
+    return audio;
+  }
+
+  function togglePlay() {
+    if (!audio || S.fd.completed) return;
+    if (audio.paused) {
+      var pr = audio.play();
+      if (pr && pr.catch) pr.catch(function () { showFallback(); });
+      clearTimeout(stallTimer);
+      var at = audio.currentTime;
+      stallTimer = setTimeout(function () {
+        if (audio && !audio.paused && audio.currentTime <= at + 0.5) showFallback();
+      }, 15000);
+    } else {
+      audio.pause();
+    }
+  }
+
+  function updatePlayer() {
+    if (current !== 'fd_audio' || !audio) return;
+    var btn = document.getElementById('playBtn');
+    var fill = document.getElementById('fill');
+    var tNow = document.getElementById('tNow');
+    var tTotal = document.getElementById('tTotal');
+    var status = document.getElementById('audioStatus');
+    if (!btn) return;
+    var dur = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : (BOOT.fdAudioSeconds || 398);
+    var now = S.fd.completed ? dur : audio.currentTime;
+    fill.style.width = Math.min(100, (now / dur) * 100) + '%';
+    tNow.textContent = clock(now);
+    tTotal.textContent = clock(dur);
+    var playing = !audio.paused && !audio.ended;
+    btn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+    btn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    btn.disabled = S.fd.completed;
+    if (S.fd.completed || S.fd.fallbackDone) {
+      status.textContent = 'Finished. Please click Next to continue.';
+      status.className = 'status done';
+    }
+  }
+
+  function showFallback() {
+    if (current !== 'fd_audio') return;
+    var f = document.getElementById('fallback');
+    if (f) f.hidden = false;
+  }
+
+  function startFallback() {
+    if (S.fd.fallback) return;
+    S.fd.fallback = true;
+    S.fd.fallbackStart = Date.now();
+    if (audio && !audio.paused) audio.pause();
+    var need = (BOOT.fdAudioSeconds || 398) * 1000;
+    clearInterval(fallbackTimer);
+    fallbackTimer = setInterval(function () {
+      if (Date.now() - S.fd.fallbackStart >= need) {
+        S.fd.fallbackDone = true;
+        clearInterval(fallbackTimer);
+        updatePlayer();
+      }
+      refreshNav();
+    }, 1000);
+    refreshNav();
+  }
+
+  function playedSeconds(a) {
+    var total = 0;
+    try { for (var i = 0; i < a.played.length; i++) total += a.played.end(i) - a.played.start(i); } catch (e) { /* none */ }
+    return Math.round(total * 10) / 10;
+  }
+
+  // ---------------------------------------------------------------
+  // Time away from the page while the simulation is open (Intervention B)
+  // ---------------------------------------------------------------
+  function goneAway() {
+    if (current === 'sd_intro' && S.sd.opened > 0 && awayStart === null) awayStart = Date.now();
+  }
+  function cameBack() {
+    if (awayStart !== null) { S.sd.awayMs += Date.now() - awayStart; awayStart = null; }
+  }
+  document.addEventListener('visibilitychange', function () { if (document.hidden) goneAway(); else cameBack(); });
+  window.addEventListener('blur', goneAway);
+  window.addEventListener('focus', cameBack);
+
+  // ---------------------------------------------------------------
+  // Small helpers
+  // ---------------------------------------------------------------
+  function radioQ(key, text, options) {
+    return '<section class="q" id="q-' + key + '"><h2 id="h-' + key + '">' + esc(text) + '</h2>' +
+      '<div class="choices" role="radiogroup" aria-labelledby="h-' + key + '">' +
+      options.map(function (o, i) {
+        var on = S.a[key] === o;
+        return '<label class="choice' + (on ? ' is-checked' : '') + '"><input type="radio" name="' + key + '" id="' + key + '-' + i + '" value="' + esc(o) + '"' + (on ? ' checked' : '') + '> <span>' + esc(o) + '</span></label>';
+      }).join('') + '</div></section>';
+  }
+
+  function bindChoices() {
+    Array.prototype.forEach.call(document.querySelectorAll('.choices input[type="radio"]'), function (r) {
+      r.addEventListener('change', function () {
+        S.a[r.name] = r.value;
+        Array.prototype.forEach.call(document.querySelectorAll('input[name="' + r.name + '"]'), function (x) {
+          x.closest('.choice').classList.toggle('is-checked', x.checked);
+        });
+        clearError(r.name);
+      });
+    });
+  }
+
+  function showError(key, msg) {
+    var q = document.getElementById('q-' + key);
+    if (!q) return;
+    q.classList.add('has-error');
+    if (!q.querySelector('.err')) {
+      var p = document.createElement('p');
+      p.className = 'err';
+      p.setAttribute('role', 'alert');
+      p.textContent = msg || 'Please answer this question.';
+      q.appendChild(p);
+    }
+  }
+  function clearError(key) {
+    var q = document.getElementById('q-' + key);
+    if (!q) return;
+    q.classList.remove('has-error');
+    var e = q.querySelector('.err');
+    if (e) e.remove();
+  }
+
+  function pickPid(params) {
+    var keys = ['PROLIFIC_PID', 'participantId', 'workerId', 'participant_id', 'pid', 'PID'];
+    for (var i = 0; i < keys.length; i++) if (params[keys[i]]) return params[keys[i]];
+    return '';
+  }
+
+  function deviceClass() {
+    var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if (!coarse) return 'desktop';
+    return Math.min(screen.width, screen.height) < 700 ? 'mobile' : 'tablet';
+  }
+
+  function makeId() {
+    var b = new Uint8Array(8);
+    try { crypto.getRandomValues(b); } catch (e) { for (var i = 0; i < 8; i++) b[i] = Math.floor(Math.random() * 256); }
+    return 'R_' + Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+  }
+
+  function clock(s) {
+    s = Math.max(0, Math.floor(s || 0));
+    return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function selectText(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var r = document.createRange();
+    r.selectNodeContents(el);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+  }
+
+  // Test hook for the local harness only.
+  window.__survey = { state: S, go: go, current: function () { return current; } };
+
+  // ---------------------------------------------------------------
+  // Start
+  // ---------------------------------------------------------------
+  function loadConfig(tries) {
+    return fetch(API_URL + '?api=config&t=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .catch(function (err) {
+        if (tries <= 1) throw err;
+        return new Promise(function (res) { setTimeout(res, 1000); }).then(function () { return loadConfig(tries - 1); });
+      });
+  }
+
+  if (WEB) {
+    $screen.innerHTML = '<p class="muted">Loading the survey\u2026</p>';
+    $actions.hidden = true;
+    loadConfig(3).then(function (cfg) {
+      ['fdAudioUrl', 'fdAudioSeconds', 'sdSimUrl'].forEach(function (k) { if (cfg[k]) BOOT[k] = cfg[k]; });
+      BOOT.open = cfg.open !== false || BOOT.test;
+      go(BOOT.open ? 'welcome' : 'closed');
+    }, function () {
+      $screen.innerHTML = '<h1>The survey could not load</h1><p>Please check your internet connection and reload this page.</p>';
+    });
+  } else {
+    go(BOOT.open === false ? 'closed' : 'welcome');
+  }
+})();
+</script>
+</body>
+</html>
