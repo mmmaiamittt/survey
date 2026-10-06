@@ -127,7 +127,7 @@ select {
   border-radius: 8px;
   padding: 10px 12px;
 }
-select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-visible, .play:focus-visible {
+select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-visible {
   outline: 3px solid #7F9BD0;
   outline-offset: 2px;
 }
@@ -202,35 +202,16 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
   .q { padding: 16px; }
 }
 
-/* Audio player */
+/* Audio player: the browser's own controls, so the timeline can be dragged
+   and speed extensions can find the audio. */
 .player {
-  display: flex;
-  align-items: center;
-  gap: 16px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 16px 18px;
+  padding: 14px 16px;
   margin: 8px 0 18px;
 }
-.play {
-  flex: none;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 0;
-  background: var(--accent);
-  color: var(--accent-ink);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-}
-.play svg { width: 22px; height: 22px; fill: currentColor; }
-.play[disabled] { opacity: .5; cursor: default; }
-.track-wrap { flex: 1; min-width: 0; }
-.track { height: 6px; background: var(--accent-soft); border-radius: 3px; overflow: hidden; }
-.fill { height: 100%; width: 0; background: var(--accent); transition: width .25s linear; }
-.time { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); margin-top: 6px; font-variant-numeric: tabular-nums; }
+.player audio { display: block; width: 100%; }
 .status { font-size: 0.95rem; color: var(--muted); }
 .status.done { color: var(--ink); font-weight: 700; }
 
@@ -489,17 +470,14 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
           '<p>You will now listen to a short imagination exercise that may help you reflect on the questions that follow.</p>' +
           '<p>It takes about seven minutes. There is nothing you need to do except listen and follow along.</p>' +
           '<p>Please use headphones if you have them, and find somewhere you won\u2019t be interrupted.</p>' +
-          '<div class="player" role="group" aria-label="Audio player">' +
-            '<button class="play" id="playBtn" type="button" aria-label="Play">' + ICON_PLAY + '</button>' +
-            '<div class="track-wrap"><div class="track"><div class="fill" id="fill"></div></div>' +
-            '<div class="time"><span id="tNow">0:00</span><span id="tTotal">' + clock(BOOT.fdAudioSeconds || 398) + '</span></div></div>' +
-          '</div>' +
+          '<div class="player" id="playerSlot" role="group" aria-label="Audio player"></div>' +
           '<p class="status" id="audioStatus">Press play and listen all the way through.</p>' +
           '<p id="fallback" class="small" hidden>If the audio does not play here, <a id="fallbackLink" href="' + esc(BOOT.fdAudioUrl) + '" target="_blank" rel="noopener">open it in a new tab</a>, listen all the way through, then come back to this tab.</p>';
       },
       after: function () {
-        ensureAudio();
-        document.getElementById('playBtn').addEventListener('click', togglePlay);
+        // The same audio element is kept and moved back in on "Return",
+        // so its position and listening record survive.
+        document.getElementById('playerSlot').appendChild(ensureAudio());
         document.getElementById('fallbackLink').addEventListener('click', startFallback);
         if (S.fd.fallback) document.getElementById('fallback').hidden = false;
         updatePlayer();
@@ -854,17 +832,18 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
   // ---------------------------------------------------------------
   // Audio (Intervention A)
   // ---------------------------------------------------------------
-  var ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>';
-  var ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
-
+  // A real <audio> element with the browser's controls: the timeline can be
+  // dragged, and speed extensions can find it. Reaching the end, by listening
+  // or by dragging, unlocks Next; fd_listened_sec records what was played.
   function ensureAudio() {
     if (audio) return audio;
-    audio = new Audio();
+    audio = document.createElement('audio');
+    audio.id = 'fdAudio';
+    audio.controls = true;
     audio.preload = 'metadata';
+    audio.setAttribute('controlsList', 'nodownload noplaybackrate');
     audio.src = BOOT.fdAudioUrl;
-    ['timeupdate', 'loadedmetadata', 'play', 'pause', 'playing'].forEach(function (ev) {
-      audio.addEventListener(ev, updatePlayer);
-    });
+    audio.addEventListener('play', watchStall);
     audio.addEventListener('ended', function () {
       S.fd.completed = true;
       updatePlayer();
@@ -874,39 +853,19 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
     return audio;
   }
 
-  function togglePlay() {
-    if (!audio || S.fd.completed) return;
-    if (audio.paused) {
-      var pr = audio.play();
-      if (pr && pr.catch) pr.catch(function () { showFallback(); });
-      clearTimeout(stallTimer);
-      var at = audio.currentTime;
-      stallTimer = setTimeout(function () {
-        if (audio && !audio.paused && audio.currentTime <= at + 0.5) showFallback();
-      }, 15000);
-    } else {
-      audio.pause();
-    }
+  // If playback does not move for 15 seconds, offer the new-tab link.
+  function watchStall() {
+    clearTimeout(stallTimer);
+    var at = audio.currentTime;
+    stallTimer = setTimeout(function () {
+      if (audio && !audio.paused && audio.currentTime <= at + 0.5) showFallback();
+    }, 15000);
   }
 
   function updatePlayer() {
-    if (current !== 'fd_audio' || !audio) return;
-    var btn = document.getElementById('playBtn');
-    var fill = document.getElementById('fill');
-    var tNow = document.getElementById('tNow');
-    var tTotal = document.getElementById('tTotal');
+    if (current !== 'fd_audio') return;
     var status = document.getElementById('audioStatus');
-    if (!btn) return;
-    var dur = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : (BOOT.fdAudioSeconds || 398);
-    var now = S.fd.completed ? dur : audio.currentTime;
-    fill.style.width = Math.min(100, (now / dur) * 100) + '%';
-    tNow.textContent = clock(now);
-    tTotal.textContent = clock(dur);
-    var playing = !audio.paused && !audio.ended;
-    btn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
-    btn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
-    btn.disabled = S.fd.completed;
-    if (S.fd.completed || S.fd.fallbackDone) {
+    if (status && (S.fd.completed || S.fd.fallbackDone)) {
       status.textContent = 'Finished. Please click Next to continue.';
       status.className = 'status done';
     }
