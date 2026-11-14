@@ -267,6 +267,9 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
 }
 .codebox code { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.06em; user-select: all; }
 .foot { margin-top: 40px; font-size: 0.82rem; color: var(--muted); }
+.sc { margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+.sc a { overflow-wrap: anywhere; }
+.sc .codebox { margin-bottom: 1rem; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -285,6 +288,7 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
     <button id="nextBtn" class="btn primary" type="button">Next</button>
   </nav>
   <p id="navHint" class="hint" hidden></p>
+  <p id="pageFoot" class="foot" hidden>SurveyCircle users receive points for their participation, which can be used to recruit free survey participants at SurveyCircle.com</p>
 </div>
 
 <script type="application/json" id="boot"><?!= bootJson ?></script>
@@ -593,6 +597,11 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
           html += '<p style="margin-top:1.4rem">Please click the button below to confirm your participation.</p>' +
             '<a class="linkbtn" href="' + esc(done.completionUrl) + '" target="_top">Complete and return</a>';
         }
+        html += '<div class="sc">' +
+          '<p>Redeem the following Survey Code at <a href="https://www.surveycircle.com" target="_blank" rel="noopener">https://www.surveycircle.com</a> and get free survey participants through SurveyCircle. The Survey Code is:</p>' +
+          '<div class="codebox"><code>T58T-G43C-5T8R-BT74</code></div>' +
+          '<p>You can also redeem the Survey Code with one click: <a href="https://www.surveycircle.com/T58T-G43C-5T8R-BT74/" target="_blank" rel="noopener">https://www.surveycircle.com/T58T-G43C-5T8R-BT74/</a></p>' +
+          '</div>';
         return html;
       },
       after: function () {
@@ -656,6 +665,8 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
     if (sc.after) sc.after();
     var showNav = sc.nav !== false;
     $actions.hidden = !showNav;
+    var foot = document.getElementById('pageFoot');
+    if (foot) foot.hidden = name !== 'welcome';
     $back.hidden = !sc.back;
     $back.textContent = sc.backLabel || 'Back';
     $next.textContent = sc.nextLabel || 'Next';
