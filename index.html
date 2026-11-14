@@ -267,9 +267,15 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
 }
 .codebox code { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.06em; user-select: all; }
 .foot { margin-top: 40px; font-size: 0.82rem; color: var(--muted); }
-.sc { margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
-.sc a { overflow-wrap: anywhere; }
-.sc .codebox { margin-bottom: 1rem; }
+.xchg { margin-top: 2rem; padding-top: 1.6rem; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .xchg { grid-template-columns: 1fr; } }
+.xcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; font-size: 0.92rem; }
+.xcard h2 { font-size: 1rem; margin: 0 0 0.6rem; }
+.xcard p { margin: 0 0 0.8rem; }
+.xcard p:last-child { margin-bottom: 0; }
+.xcard a { color: var(--accent); overflow-wrap: anywhere; }
+.xcode { display: block; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; margin: 0 0 0.8rem; text-align: center; font-weight: 700; font-size: 1.02rem; letter-spacing: 0.05em; user-select: all; }
+.xcard .xcode:last-child { margin-bottom: 0; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -288,7 +294,7 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
     <button id="nextBtn" class="btn primary" type="button">Next</button>
   </nav>
   <p id="navHint" class="hint" hidden></p>
-  <p id="pageFoot" class="foot" hidden>SurveyCircle users receive points for their participation, which can be used to recruit free survey participants at SurveyCircle.com</p>
+  <p id="pageFoot" class="foot" hidden>SurveyCircle users receive points for their participation, which can be used to recruit free survey participants at SurveyCircle.com<span style="display:block;margin-top:8px">Completing this survey gives you Karma that can be used to get free research participants at SurveySwap.io.</span></p>
 </div>
 
 <script type="application/json" id="boot"><?!= bootJson ?></script>
@@ -597,10 +603,18 @@ select:focus-visible, .choice:focus-within, .btn:focus-visible, .linkbtn:focus-v
           html += '<p style="margin-top:1.4rem">Please click the button below to confirm your participation.</p>' +
             '<a class="linkbtn" href="' + esc(done.completionUrl) + '" target="_top">Complete and return</a>';
         }
-        html += '<div class="sc">' +
+        html += '<div class="xchg">' +
+          '<section class="xcard"><h2>SurveyCircle</h2>' +
           '<p>Redeem the following Survey Code at <a href="https://www.surveycircle.com" target="_blank" rel="noopener">https://www.surveycircle.com</a> and get free survey participants through SurveyCircle. The Survey Code is:</p>' +
-          '<div class="codebox"><code>T58T-G43C-5T8R-BT74</code></div>' +
+          '<code class="xcode">T58T-G43C-5T8R-BT74</code>' +
           '<p>You can also redeem the Survey Code with one click: <a href="https://www.surveycircle.com/T58T-G43C-5T8R-BT74/" target="_blank" rel="noopener">https://www.surveycircle.com/T58T-G43C-5T8R-BT74/</a></p>' +
+          '</section>' +
+          '<section class="xcard"><h2>SurveySwap</h2>' +
+          '<p>The following code gives you Karma that can be used to get free research participants at SurveySwap.io.</p>' +
+          '<p>Go to: <a href="https://surveyswap.io/sr/NBI4-2OAV-RJM7" target="_blank" rel="noopener">https://surveyswap.io/sr/NBI4-2OAV-RJM7</a></p>' +
+          '<p>Or enter the code manually:</p>' +
+          '<code class="xcode">NBI4-2OAV-RJM7</code>' +
+          '</section>' +
           '</div>';
         return html;
       },
